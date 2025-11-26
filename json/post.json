@@ -1,0 +1,45 @@
+{
+    "post": [
+
+        {
+            "folder": "1",
+            "tittle": "MAQUINA"
+        },
+        {
+            "folder": "2"
+        },
+        {
+            "folder": "3",
+            "tittle": "La Recolectora"
+        },
+        {
+            "folder": "4"
+        },
+        {
+            "folder": "5"
+        },
+        {
+            "folder": "6"
+        }   ,
+        {
+            "folder": "7",
+            "tittle": "MAQUINA"
+        },
+        {
+            "folder": "8"
+        },
+        {
+            "folder": "9",
+            "tittle": "La Recolectora"
+        },
+        {
+            "folder": "10"
+        },
+        {
+            "folder": "11"
+        },
+        {
+            "folder": "12"
+        }   
+    ]
+}

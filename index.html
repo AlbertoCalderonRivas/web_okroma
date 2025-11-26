@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>o.kroma - Portfolio</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            background: #0f0;
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        header {
+            position: sticky;
+
+            width: 100%;
+
+            top: 0;
+            left: 0;
+            background: linear-gradient(to bottom, rgba(0,255,0,1), rgba(0,255,0,0));
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 5;
+            
+            z-index: 10;
+        }
+
+        .post-grid {
+            column-count: 5;
+            column-gap: 10px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 1200px) {
+            .post-grid {
+                column-count: 3;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .post-grid {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .post-grid {
+                column-count: 1;
+            }
+        }
+
+        .post {
+            border: 2px solid black;
+            background: white;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 20px;
+            break-inside: avoid;
+        }
+
+        .post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .post-link {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .post-media {
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f5;
+        }
+
+        .post-media img,
+        .post-media video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .post-text {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .post-text h2 {
+            margin: 0 0 12px 0;
+            font-size: 1.5rem;
+            color: #222;
+        }
+
+        .post-text p {
+            margin: 0;
+            line-height: 1.6;
+            color: #555;
+            white-space: pre-line;
+        }
+
+        /* Carousel */
+        .carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide img,
+        .carousel-slide video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0);
+            color: rgba(0,0,0,0);
+            border: none;
+            width: 36px;
+            height: 206px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 7;
+            transition: color 0.2s;
+        }
+
+        @media (max-width: 795px){
+            .carousel-arrow{
+                 color: rgba(255,255,255,1);
+            }
+        }
+
+        .carousel-arrow:hover {
+            color:#0f0;
+        }
+
+        .carousel-arrow.prev {
+            left: 10px;
+        }
+
+        .carousel-arrow.next {
+            right: 10px;
+        }
+
+        /*.carousel-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            z-index: 1;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .carousel-dot.active {
+            background: white;
+        }*/
+
+        /* Loading & Error */
+        .message {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 1.2rem;
+        }
+
+        .error {
+            color: #d32f2f;
+        }
+
+        .fallback {
+            padding: 40px 20px;
+            text-align: center;
+            color: #888;
+            font-style: italic;
+        }
+
+        /* Hide elements */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>O.KROMA</h1>
+    </header>
+    <div id="loading" class="message">Cargando proyectos...</div>
+    <div id="error" class="message error hidden"></div>
+    <div class="post-grid" id="postGrid"></div>
+
+    <script>
+        // Configuración
+        const CONFIG = {
+            jsonPath: '/json/post.json',
+            mediaBasePath: '/media',
+            autoplayInterval: 3000,
+            supportedImageFormats: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'],
+            supportedVideoFormats: ['mp4', 'webm', 'ogv', 'mov'],
+            supportedTextFormats: ['txt', 'md']
+        };
+
+        // Utilidades
+        const Utils = {
+            getFileExtension(filename) {
+                return filename.split('.').pop().toLowerCase();
+            },
+
+            isImage(filename) {
+                const ext = this.getFileExtension(filename);
+                return CONFIG.supportedImageFormats.includes(ext);
+            },
+
+            isVideo(filename) {
+                const ext = this.getFileExtension(filename);
+                return CONFIG.supportedVideoFormats.includes(ext);
+            },
+
+            isText(filename) {
+                const ext = this.getFileExtension(filename);
+                return CONFIG.supportedTextFormats.includes(ext);
+            },
+
+            async fetchJSON(url) {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+                return response.json();
+            },
+
+            async fetchText(url) {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+                return response.text();
+            }
+        };
+
+        // Clase para manejar los archivos de una carpeta
+        class MediaFolder {
+            constructor(folderPath) {
+                this.folderPath = folderPath;
+                this.files = [];
+                this.images = [];
+                this.videos = [];
+                this.texts = [];
+            }
+
+            async loadFiles() {
+                try {
+                    // Intentar cargar el índice de archivos
+                    const indexUrl = `${this.folderPath}/index.json`;
+                    const data = await Utils.fetchJSON(indexUrl);
+                    this.files = data.files || [];
+                } catch (error) {
+                    console.warn(`No se encontró index.json en ${this.folderPath}`);
+                    this.files = [];
+                }
+
+                this.categorizeFiles();
+                return this.files.length > 0;
+            }
+
+            categorizeFiles() {
+                this.images = this.files.filter(f => Utils.isImage(f));
+                this.videos = this.files.filter(f => Utils.isVideo(f));
+                this.texts = this.files.filter(f => Utils.isText(f));
+            }
+
+            getFullPath(filename) {
+                return `${this.folderPath}/${filename}`;
+            }
+
+            async getTextContent() {
+                if (this.texts.length === 0) return null;
+                const textUrl = this.getFullPath(this.texts[0]);
+                try {
+                    return await Utils.fetchText(textUrl);
+                } catch (error) {
+                    console.error(`Error cargando texto: ${error.message}`);
+                    return null;
+                }
+            }
+
+            getMediaFiles() {
+                return [...this.images, ...this.videos];
+            }
+        }
+
+        // Clase Post
+        class Post {
+            constructor(data, index) {
+                this.id = `post-${index}`;
+                this.title = data.title || null;
+                this.folderPath = data.folder ? `${CONFIG.mediaBasePath}/${data.folder}` : null;
+                this.link = data.link || null;
+                this.background = data.background || null;
+                this.autoplay = data.autoplay === true;
+                this.mediaFolder = null;
+            }
+
+            async load() {
+                if (!this.folderPath) return false;
+                
+                this.mediaFolder = new MediaFolder(this.folderPath);
+                return await this.mediaFolder.loadFiles();
+            }
+
+            async render() {
+                const post = document.createElement('div');
+                post.className = 'post';
+                post.id = this.id;
+
+                if (this.background) {
+                    post.style.backgroundColor = this.background;
+                }
+
+                const content = await this.createContent();
+                
+                if (this.link) {
+                    const linkWrapper = document.createElement('a');
+                    linkWrapper.href = this.link;
+                    linkWrapper.className = 'post-link';
+                    linkWrapper.target = '_blank';
+                    linkWrapper.rel = 'noopener noreferrer';
+                    linkWrapper.appendChild(content);
+                    post.appendChild(linkWrapper);
+                } else {
+                    post.appendChild(content);
+                }
+
+                return post;
+            }
+
+            async createContent() {
+                const container = document.createElement('div');
+                container.style.display = 'flex';
+                container.style.flexDirection = 'column';
+                container.style.height = '100%';
+
+                if (!this.mediaFolder) {
+                    container.innerHTML = '<div class="fallback">No hay contenido disponible</div>';
+                    return container;
+                }
+
+                const mediaFiles = this.mediaFolder.getMediaFiles();
+                
+                // Crear sección de media
+                if (mediaFiles.length > 0) {
+                    const mediaSection = await this.createMediaSection(mediaFiles);
+                    container.appendChild(mediaSection);
+                }
+
+                // Crear sección de texto
+                const textContent = await this.mediaFolder.getTextContent();
+                if (this.title || textContent) {
+                    const textSection = this.createTextSection(textContent);
+                    container.appendChild(textSection);
+                }
+
+                return container;
+            }
+
+            async createMediaSection(mediaFiles) {
+                const mediaDiv = document.createElement('div');
+                mediaDiv.className = 'post-media';
+
+                if (mediaFiles.length === 1) {
+                    // Un solo archivo
+                    mediaDiv.appendChild(this.createMediaElement(mediaFiles[0]));
+                } else if (mediaFiles.length > 1) {
+                    // Carousel
+                    const carousel = this.createCarousel(mediaFiles);
+                    mediaDiv.appendChild(carousel);
+                }
+
+                return mediaDiv;
+            }
+
+            createMediaElement(filename) {
+                const fullPath = this.mediaFolder.getFullPath(filename);
+                
+                if (Utils.isImage(filename)) {
+                    const img = document.createElement('img');
+                    img.src = fullPath;
+                    img.alt = this.title || 'Imagen del proyecto';
+                    img.loading = 'lazy';
+                    return img;
+                } else if (Utils.isVideo(filename)) {
+                    const video = document.createElement('video');
+                    video.controls = true;
+                    video.preload = 'metadata';
+                    const source = document.createElement('source');
+                    source.src = fullPath;
+                    source.type = `video/${Utils.getFileExtension(filename)}`;
+                    video.appendChild(source);
+                    return video;
+                }
+            }
+
+            createCarousel(mediaFiles) {
+                const carousel = document.createElement('div');
+                carousel.className = 'carousel';
+                carousel.dataset.postId = this.id;
+
+                const track = document.createElement('div');
+                track.className = 'carousel-track';
+
+                mediaFiles.forEach(file => {
+                    const slide = document.createElement('div');
+                    slide.className = 'carousel-slide';
+                    slide.appendChild(this.createMediaElement(file));
+                    track.appendChild(slide);
+                });
+
+                carousel.appendChild(track);
+
+                // Controles
+                const prevBtn = document.createElement('button');
+                prevBtn.className = 'carousel-arrow prev';
+                prevBtn.innerHTML = '‹';
+                prevBtn.setAttribute('aria-label', 'Anterior');
+
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'carousel-arrow next';
+                nextBtn.innerHTML = '›';
+                nextBtn.setAttribute('aria-label', 'Siguiente');
+
+                carousel.appendChild(prevBtn);
+                carousel.appendChild(nextBtn);
+
+                // Dots
+                /*
+                const dotsContainer = document.createElement('div');
+                dotsContainer.className = 'carousel-dots';
+
+                mediaFiles.forEach((_, index) => {
+                    const dot = document.createElement('div');
+                    dot.className = 'carousel-dot';
+                    if (index === 0) dot.classList.add('active');
+                    dot.dataset.index = index;
+                    dotsContainer.appendChild(dot);
+                });
+
+                carousel.appendChild(dotsContainer);*/
+
+                // Inicializar comportamiento del carousel después de renderizar
+                setTimeout(() => this.initCarousel(carousel), 0);
+
+                return carousel;
+            }
+
+            initCarousel(carousel) {
+                const track = carousel.querySelector('.carousel-track');
+                const slides = carousel.querySelectorAll('.carousel-slide');
+                const prevBtn = carousel.querySelector('.prev');
+                const nextBtn = carousel.querySelector('.next');
+                const dots = carousel.querySelectorAll('.carousel-dot');
+
+                let currentIndex = 0;
+                let autoplayTimer = null;
+
+                const updateCarousel = (index) => {
+                    currentIndex = (index + slides.length) % slides.length;
+                    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === currentIndex);
+                    });
+                };
+
+                const next = () => updateCarousel(currentIndex + 1);
+                const prev = () => updateCarousel(currentIndex - 1);
+
+                prevBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    prev();
+                    resetAutoplay();
+                });
+
+                nextBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    next();
+                    resetAutoplay();
+                });
+
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        updateCarousel(index);
+                        resetAutoplay();
+                    });
+                });
+
+                const startAutoplay = () => {
+                    if (this.autoplay && slides.length > 1) {
+                        autoplayTimer = setInterval(next, CONFIG.autoplayInterval);
+                    }
+                };
+
+                const resetAutoplay = () => {
+                    if (autoplayTimer) {
+                        clearInterval(autoplayTimer);
+                        startAutoplay();
+                    }
+                };
+
+                startAutoplay();
+            }
+
+            createTextSection(textContent) {
+                const textDiv = document.createElement('div');
+                textDiv.className = 'post-text';
+
+                if (this.title) {
+                    const titleEl = document.createElement('h2');
+                    titleEl.textContent = this.title;
+                    textDiv.appendChild(titleEl);
+                }
+
+                if (textContent) {
+                    const textEl = document.createElement('p');
+                    textEl.textContent = textContent;
+                    textDiv.appendChild(textEl);
+                }
+
+                return textDiv;
+            }
+        }
+
+        // Clase principal de la aplicación
+        class PortfolioApp {
+            constructor() {
+                this.posts = [];
+                this.loadingEl = document.getElementById('loading');
+                this.errorEl = document.getElementById('error');
+                this.gridEl = document.getElementById('postGrid');
+            }
+
+            showError(message) {
+                this.loadingEl.classList.add('hidden');
+                this.errorEl.textContent = `Error: ${message}`;
+                this.errorEl.classList.remove('hidden');
+            }
+
+            hideLoading() {
+                this.loadingEl.classList.add('hidden');
+            }
+
+            async init() {
+                try {
+                    const data = await Utils.fetchJSON(CONFIG.jsonPath);
+                    
+                    if (!data.post || !Array.isArray(data.post)) {
+                        throw new Error('Formato de JSON inválido');
+                    }
+
+                    this.posts = data.post.map((postData, index) => new Post(postData, index));
+                    
+                    await this.loadAndRenderPosts();
+                    this.hideLoading();
+
+                } catch (error) {
+                    this.showError(error.message);
+                    console.error('Error inicializando la aplicación:', error);
+                }
+            }
+
+            async loadAndRenderPosts() {
+                for (const post of this.posts) {
+                    await post.load();
+                    const postElement = await post.render();
+                    this.gridEl.appendChild(postElement);
+                }
+            }
+        }
+
+        // Inicializar la aplicación
+        document.addEventListener('DOMContentLoaded', () => {
+            const app = new PortfolioApp();
+            app.init();
+        });
+    </script>
+</body>
+</html>
