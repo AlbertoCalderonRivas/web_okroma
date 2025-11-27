@@ -12,4 +12,5 @@ prueba HTML
 <h2>SOY UN TITULO!</h2>
 <b>estoy en negrita</b>
 <font color="#aa00ff">Esto sale en morado!</font>
-<a href="https://calde-core.com">link a la web de calde</a>
+<a href="https://calde-core.com">esto es un link</a>
+esto es un emoji 😃
