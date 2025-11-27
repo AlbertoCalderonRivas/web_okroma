@@ -14,7 +14,7 @@
             min-height: 100vh;
             background: #0f0;
             margin: 0;
-            padding: 20px;
+            padding: 0px;
             font-family: Arial, Helvetica, sans-serif;
         }
 
@@ -29,16 +29,21 @@
             justify-content: center;
             align-items: center;
             margin: 0;
-            padding: 5;
+            padding: 0;
             
             z-index: 10;
         }
 
         .post-grid {
-            column-count: 5;
-            column-gap: 10px;
+            column-count: 6;
+            column-gap: 3px;
             max-width: 100%;
             margin: 0 auto;
+        }
+         @media (max-width: 1600px) {
+            .post-grid {
+                column-count: 4;
+            }
         }
 
         @media (max-width: 1200px) {
@@ -60,19 +65,22 @@
         }
 
         .post {
-            border: 2px solid black;
-            background: white;
+           /* border: 2px solid black;*/
+            background: rgb(237, 237, 244);
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             display: inline-block;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 0px;
             break-inside: avoid;
         }
 
         .post:hover {
-            transform: translateY(-5px);
+            /*transform-origin: bottom;*/
+            /*transform: perspective(900px) rotateX(10deg);*/
+            /*transform: translateY(5px);*/
+            transform: scale(0.95);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
@@ -90,7 +98,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f5f5f5;
+            background: #000000;
         }
 
         .post-media img,
@@ -103,18 +111,19 @@
         .post-text {
             padding: 20px;
             flex: 1;
+            
         }
 
         .post-text h2 {
-            margin: 0 0 12px 0;
+            margin: 0 0 0 0;
             font-size: 1.5rem;
-            color: #222;
+            color: #002aff;
         }
 
         .post-text p {
             margin: 0;
             line-height: 1.6;
-            color: #555;
+            color: rgb(0, 0, 0);
             white-space: pre-line;
         }
 
@@ -123,17 +132,20 @@
             position: relative;
             width: 100%;
             overflow: hidden;
+            transition: height 0.9s ease-in;
+            background: black;
         }
 
         .carousel-track {
             display: flex;
+            align-items: flex-start;
             transition: transform 0.5s ease;
         }
 
         .carousel-slide {
             min-width: 100%;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
         }
 
@@ -142,6 +154,7 @@
             width: 100%;
             height: auto;
             display: block;
+            top: 0;
         }
 
         .carousel-arrow {
@@ -233,7 +246,7 @@
     <header class="header">
         <h1>O.KROMA</h1>
     </header>
-    <div id="loading" class="message">Cargando proyectos...</div>
+    <!---<div id="loading" class="message">Cargando proyectos...</div>--->
     <div id="error" class="message error hidden"></div>
     <div class="post-grid" id="postGrid"></div>
 
@@ -367,7 +380,7 @@
                     const linkWrapper = document.createElement('a');
                     linkWrapper.href = this.link;
                     linkWrapper.className = 'post-link';
-                    linkWrapper.target = '_blank';
+                    //linkWrapper.target = '_blank'; abrir en nueva pestaña
                     linkWrapper.rel = 'noopener noreferrer';
                     linkWrapper.appendChild(content);
                     post.appendChild(linkWrapper);
@@ -400,7 +413,8 @@
                 // Crear sección de texto
                 const textContent = await this.mediaFolder.getTextContent();
                 if (this.title || textContent) {
-                    const textSection = this.createTextSection(textContent);
+                    const title = this.title;
+                    const textSection = this.createTextSection(title,textContent);
                     container.appendChild(textSection);
                 }
 
@@ -496,27 +510,119 @@
                 return carousel;
             }
 
-            initCarousel(carousel) {
+          initCarousel(carousel) {
                 const track = carousel.querySelector('.carousel-track');
-                const slides = carousel.querySelectorAll('.carousel-slide');
+                const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
                 const prevBtn = carousel.querySelector('.prev');
                 const nextBtn = carousel.querySelector('.next');
                 const dots = carousel.querySelectorAll('.carousel-dot');
 
+                if (slides.length === 0) return;
+
                 let currentIndex = 0;
                 let autoplayTimer = null;
+                let isTransitioning = false;
 
-                const updateCarousel = (index) => {
-                    currentIndex = (index + slides.length) % slides.length;
-                    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                // Clonar primera y última slide para el efecto infinito
+                const firstClone = slides[0].cloneNode(true);
+                const lastClone = slides[slides.length - 1].cloneNode(true);
+                
+                track.appendChild(firstClone);
+                track.insertBefore(lastClone, slides[0]);
 
-                    dots.forEach((dot, i) => {
-                        dot.classList.toggle('active', i === currentIndex);
-                    });
+                const allSlides = track.querySelectorAll('.carousel-slide');
+                const totalSlides = allSlides.length;
+
+                // Empezar en la primera slide real (índice 1 porque hay un clon antes)
+                currentIndex = 1;
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+                // Ajustar altura del carrusel según la imagen actual
+                const adjustCarouselHeight = () => {
+                    if (currentIndex < 0 || currentIndex >= allSlides.length) return;
+                    
+                    const currentSlide = allSlides[currentIndex];
+                    const media = currentSlide.querySelector('img, video');
+                    
+                    if (media) {
+                        const updateHeight = () => {
+                            // Esperar un momento para que la imagen se renderice completamente
+                            requestAnimationFrame(() => {
+                                const mediaHeight = media.offsetHeight;
+                                if (mediaHeight > 0) {
+                                    carousel.style.height = mediaHeight + 'px';
+                                }
+                            });
+                        };
+
+                        if (media.tagName === 'IMG') {
+                            if (media.complete && media.naturalWidth > 0) {
+                                updateHeight();
+                            } else {
+                                media.onload = updateHeight;
+                            }
+                        } else {
+                            // Para videos, esperar a que los metadatos carguen
+                            if (media.readyState >= 1) {
+                                updateHeight();
+                            } else {
+                                media.onloadedmetadata = updateHeight;
+                            }
+                        }
+                    }
                 };
 
-                const next = () => updateCarousel(currentIndex + 1);
-                const prev = () => updateCarousel(currentIndex - 1);
+                const updateCarousel = (newIndex, instant = false) => {
+                    if (instant) {
+                        track.style.transition = 'none';
+                        currentIndex = newIndex;
+                        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                        
+                        // Forzar reflow
+                        track.offsetHeight;
+                        
+                        track.style.transition = 'transform 0.5s ease';
+                    } else {
+                        if (isTransitioning) return;
+                        isTransitioning = true;
+                        
+                        currentIndex = newIndex;
+                        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    }
+
+                    // Actualizar dots (solo para las slides reales)
+                    const realIndex = currentIndex - 1;
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === realIndex % slides.length);
+                    });
+
+                    adjustCarouselHeight();
+                };
+
+                track.addEventListener('transitionend', () => {
+                    isTransitioning = false;
+
+                    // Si estamos en el clon de la última (al principio del track)
+                    if (currentIndex === 0) {
+                        updateCarousel(slides.length, true);
+                    }
+                    // Si estamos en el clon de la primera (al final del track)
+                    else if (currentIndex === totalSlides - 1) {
+                        updateCarousel(1, true);
+                    }
+                });
+
+                const next = () => {
+                    if (!isTransitioning) {
+                        updateCarousel(currentIndex + 1);
+                    }
+                };
+
+                const prev = () => {
+                    if (!isTransitioning) {
+                        updateCarousel(currentIndex - 1);
+                    }
+                };
 
                 prevBtn.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -533,8 +639,10 @@
                 dots.forEach((dot, index) => {
                     dot.addEventListener('click', (e) => {
                         e.preventDefault();
-                        updateCarousel(index);
-                        resetAutoplay();
+                        if (!isTransitioning) {
+                            updateCarousel(index + 1);
+                            resetAutoplay();
+                        }
                     });
                 });
 
@@ -551,14 +659,20 @@
                     }
                 };
 
+                // Ajustar altura inicial
+                setTimeout(adjustCarouselHeight, 100);
+                
+                // Reajustar altura cuando cambie el tamaño de la ventana
+                window.addEventListener('resize', adjustCarouselHeight);
+
                 startAutoplay();
             }
 
-            createTextSection(textContent) {
+            createTextSection(title, textContent) {
                 const textDiv = document.createElement('div');
                 textDiv.className = 'post-text';
 
-                if (this.title) {
+                if (title) {
                     const titleEl = document.createElement('h2');
                     titleEl.textContent = this.title;
                     textDiv.appendChild(titleEl);
@@ -566,7 +680,7 @@
 
                 if (textContent) {
                     const textEl = document.createElement('p');
-                    textEl.textContent = textContent;
+                    textEl.innerHTML = textContent;
                     textDiv.appendChild(textEl);
                 }
 
@@ -578,20 +692,20 @@
         class PortfolioApp {
             constructor() {
                 this.posts = [];
-                this.loadingEl = document.getElementById('loading');
+                //this.loadingEl = document.getElementById('loading');
                 this.errorEl = document.getElementById('error');
                 this.gridEl = document.getElementById('postGrid');
             }
 
             showError(message) {
-                this.loadingEl.classList.add('hidden');
+                //this.loadingEl.classList.add('hidden');
                 this.errorEl.textContent = `Error: ${message}`;
                 this.errorEl.classList.remove('hidden');
             }
 
-            hideLoading() {
+           /*hideLoading() {
                 this.loadingEl.classList.add('hidden');
-            }
+            }*/
 
             async init() {
                 try {
@@ -604,7 +718,7 @@
                     this.posts = data.post.map((postData, index) => new Post(postData, index));
                     
                     await this.loadAndRenderPosts();
-                    this.hideLoading();
+                    //this.hideLoading();
 
                 } catch (error) {
                     this.showError(error.message);

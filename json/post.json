@@ -3,14 +3,15 @@
 
         {
             "folder": "1",
-            "tittle": "MAQUINA"
+            "title": "MAQUINA",
+            "autoplay": "false"
         },
         {
             "folder": "2"
         },
         {
-            "folder": "3",
-            "tittle": "La Recolectora"
+            "folder": "3"
+            
         },
         {
             "folder": "4"
@@ -20,17 +21,19 @@
         },
         {
             "folder": "6"
-        }   ,
+        },
         {
             "folder": "7",
             "tittle": "MAQUINA"
         },
         {
-            "folder": "8"
+            "folder": "8",
+            "title": "La Recolectora",
+            "link":"LaRecolectora/index.html"
         },
         {
             "folder": "9",
-            "tittle": "La Recolectora"
+            "title": "La Recolectora"
         },
         {
             "folder": "10"

@@ -1,7 +1,15 @@
-La recolectora es un proyecto en el cual espigar y pasear
-nuestro entorno, buscando y experimentando con los
-materiales que recolectamos. En esta deriva entramos
-en contacto con la diversidad y complejidad de nuestro
-territorio, afinando la mirada para ver cosas que están
-más allá de lo que el ritmo de la ciudad nos ha hecho
-olvidar.
+viva o.broma
+mirad cuanto escribo:
+con saltos de linea:
+ksahudka aushdiua aisudh
+auoshdi asiuhd ihuasd auiha
+
+sin saltos de linea:
+uodha asiuhd aiuhsd  aiushd sdiuha diuahsd iaushd aisudh asiudh siduha das asd aiushd aiuhasdiu asiuhd ushd ushd iuhasdi aiushd iaushd aushd isudha sudh asiudh ads
+
+
+prueba HTML
+<h2>SOY UN TITULO!</h2>
+<b>estoy en negrita</b>
+<font color="#aa00ff">Esto sale en morado!</font>
+<a href="https://calde-core.com">link a la web de calde</a>
