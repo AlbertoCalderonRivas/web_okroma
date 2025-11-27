@@ -61,6 +61,7 @@ un ejemplo de post sería:
             "background": "#ffffff"
         }
 **IMPORTANTE: Todo entre "" y las propiedades estan separadas por "," pero la última propiedad no lleva "," al final, lo mismo con los post entre { }
+Un post no tiene por qué tener todas las propiedades, puede tener 1, 2 o 3 o todas, la única realmente imprescindible es la de "folder"
 
 - guardar el json (ctrl + S)
 
