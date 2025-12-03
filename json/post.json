@@ -3,7 +3,6 @@
 
         {
             "folder": "1",
-            "title": "MAQUINA 2",
             "autoplay": "true"
             
         },
@@ -24,8 +23,7 @@
             "folder": "6"
         },
         {
-            "folder": "7",
-            "title": "MHOLI"
+            "folder": "7"
         },
         {
             "folder": "8",
@@ -33,8 +31,7 @@
             "link":"LaRecolectora/index.html"
         },
         {
-            "folder": "9",
-            "title": "La Recolectora"
+            "folder": "9"
         },
         {
             "folder": "10"
