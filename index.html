@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
+
+
   <head>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>o.kroma - Portfolio</title>
@@ -45,6 +48,16 @@
         z-index: 10;
       }
 
+      .header h1 {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+        
+      }
+
       .header button {
         background: transparent;
         border: none;
@@ -60,7 +73,7 @@
       }
 
       .post-grid {
-        column-count: 6;
+        column-count: 5;
         column-gap: 3px;
         max-width: 100%;
         margin: 0 auto;
@@ -123,7 +136,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #000000;
+        background: #0f0;
       }
 
       .post-media img,
@@ -159,8 +172,8 @@
         position: relative;
         width: 100%;
         overflow: hidden;
-        transition: height 0.9s ease-in;
-        background: black;
+        transition: height 0.6s ease;
+        background: #0f0;
       }
 
       .carousel-track {
@@ -269,15 +282,32 @@
         display: none;
       }
     </style>
+
   </head>
+
   <body>
+
+
+
     <header class="header">
-      <h1>O.KROMA</h1>
+      <h1>o.kroma</h1>
       <button id="menu">=</button>
     </header>
+
+
     <!---<div id="loading" class="message">Cargando proyectos...</div>--->
+
+
     <div id="error" class="message error hidden"></div>
+
+    
     <div class="post-grid" id="postGrid"></div>
+
+
+
+
+
+
 
     <script>
       // Configuración
@@ -785,4 +815,6 @@
       });
     </script>
   </body>
+
+
 </html>
