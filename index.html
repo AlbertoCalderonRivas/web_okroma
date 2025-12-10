@@ -153,7 +153,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #0f0;
+        background: #00000000;
       }
 
       .post-media img,
@@ -168,6 +168,9 @@
         width: 100%;
         height: 100%;
         display: block;
+        min-height: 40px;
+        accent-color: #0f0;
+        color: #0f0;
       }
 
       .post-text {
@@ -224,6 +227,7 @@
       .carousel-slide audio {
         width: 100%;
         display: block;
+        min-height: 40px;
       }
 
       .carousel-arrow {
@@ -553,6 +557,9 @@
             const audio = document.createElement("audio");
             audio.controls = true;
             audio.preload = "metadata";
+            audio.controlsList = "nodownload";
+            audio.style.width = "100%";
+            audio.style.minHeight = "40px";
             const source = document.createElement("source");
             source.src = fullPath;
             source.type = `audio/${Utils.getFileExtension(filename)}`;
