@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
-
-
   <head>
-
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>o.kroma</title>
-     <link rel="icon" href="assets\favicon.ico" type="image/x-icon">
+    <link rel="icon" href="assets\favicon.ico" type="image/x-icon" />
     <style>
       * {
         box-sizing: border-box;
+        accent-color: rgb(0, 255, 0);
       }
 
       body {
@@ -56,8 +54,7 @@
         transform: scaleX(-1);
         filter: FlipH;
         -ms-filter: "FlipH";
-        color:#000;
-        
+        color: #000;
       }
 
       .header button {
@@ -72,6 +69,23 @@
 
       .header button:hover {
         cursor: pointer;
+      }
+
+      .header a:link {
+        text-decoration: none;
+        color: #000;
+      }
+      .header a:visited {
+        text-decoration: none;
+        color: #000;
+      }
+      .header a:hover {
+        text-decoration: none;
+        color: #0f0;
+      }
+      .header a:active {
+        text-decoration: none;
+        color: #000;
       }
 
       .post-grid {
@@ -105,11 +119,11 @@
       }
 
       .post {
-        border: 2px solid #0f0;
-        
+        /*border: 2px solid #0f0;*/
+
         background: #fff;
         overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
         transition: all 0.3s ease;
         display: inline-block;
         width: 100%;
@@ -147,6 +161,13 @@
         width: 100%;
         height: auto;
         display: block;
+        border: 2px solid #0f0;
+      }
+
+      .post-media audio {
+        width: 100%;
+        height: 100%;
+        display: block;
       }
 
       .post-text {
@@ -154,7 +175,6 @@
         flex: 1;
         text-align: left;
         text-align-last: left;
-        
       }
 
       .post-text h2 {
@@ -199,6 +219,11 @@
         height: auto;
         display: block;
         top: 0;
+      }
+
+      .carousel-slide audio {
+        width: 100%;
+        display: block;
       }
 
       .carousel-arrow {
@@ -286,32 +311,19 @@
         display: none;
       }
     </style>
-
   </head>
 
   <body>
-
-
-
     <header class="header">
       <h1>o.kroma</h1>
-      <button id="menu">=</button>
+      <button id="menu"><a id="menu-link" href="About/index.html">=</a></button>
     </header>
-
 
     <!---<div id="loading" class="message">Cargando proyectos...</div>--->
 
-
     <div id="error" class="message error hidden"></div>
 
-    
     <div class="post-grid" id="postGrid"></div>
-
-
-
-
-
-
 
     <script>
       // Configuración
@@ -329,6 +341,7 @@
           "bmp",
         ],
         supportedVideoFormats: ["mp4", "webm", "ogv", "mov"],
+        supportedAudioFormats: ["mp3", "wav", "ogg", "m4a", "aac", "flac"],
         supportedTextFormats: ["txt", "md"],
       };
 
@@ -346,6 +359,11 @@
         isVideo(filename) {
           const ext = this.getFileExtension(filename);
           return CONFIG.supportedVideoFormats.includes(ext);
+        },
+
+        isAudio(filename) {
+          const ext = this.getFileExtension(filename);
+          return CONFIG.supportedAudioFormats.includes(ext);
         },
 
         isText(filename) {
@@ -373,6 +391,7 @@
           this.files = [];
           this.images = [];
           this.videos = [];
+          this.audios = [];
           this.texts = [];
         }
 
@@ -394,6 +413,7 @@
         categorizeFiles() {
           this.images = this.files.filter((f) => Utils.isImage(f));
           this.videos = this.files.filter((f) => Utils.isVideo(f));
+          this.audios = this.files.filter((f) => Utils.isAudio(f));
           this.texts = this.files.filter((f) => Utils.isText(f));
         }
 
@@ -413,7 +433,7 @@
         }
 
         getMediaFiles() {
-          return [...this.images, ...this.videos];
+          return [...this.images, ...this.videos, ...this.audios];
         }
       }
 
@@ -529,6 +549,15 @@
             source.type = `video/${Utils.getFileExtension(filename)}`;
             video.appendChild(source);
             return video;
+          } else if (Utils.isAudio(filename)) {
+            const audio = document.createElement("audio");
+            audio.controls = true;
+            audio.preload = "metadata";
+            const source = document.createElement("source");
+            source.src = fullPath;
+            source.type = `audio/${Utils.getFileExtension(filename)}`;
+            audio.appendChild(source);
+            return audio;
           }
         }
 
@@ -618,7 +647,7 @@
             if (currentIndex < 0 || currentIndex >= allSlides.length) return;
 
             const currentSlide = allSlides[currentIndex];
-            const media = currentSlide.querySelector("img, video");
+            const media = currentSlide.querySelector("img, video, audio");
 
             if (media) {
               const updateHeight = () => {
@@ -637,13 +666,16 @@
                 } else {
                   media.onload = updateHeight;
                 }
-              } else {
+              } else if (media.tagName === "VIDEO") {
                 // Para videos, esperar a que los metadatos carguen
                 if (media.readyState >= 1) {
                   updateHeight();
                 } else {
                   media.onloadedmetadata = updateHeight;
                 }
+              } else if (media.tagName === "AUDIO") {
+                // Para audio, usar altura fija o esperar a que cargue
+                updateHeight();
               }
             }
           };
@@ -748,12 +780,13 @@
           const textDiv = document.createElement("div");
           textDiv.className = "post-text";
 
+          /*
           if (title) {
             const titleEl = document.createElement("h2");
             titleEl.textContent = this.title;
             textDiv.appendChild(titleEl);
           }
-
+*/
           if (textContent) {
             const textEl = document.createElement("p");
             textEl.innerHTML = textContent;
@@ -819,6 +852,4 @@
       });
     </script>
   </body>
-
-
 </html>

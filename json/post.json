@@ -2,45 +2,78 @@
     "post": [
 
         {
-            "folder": "1",
+            "folder": "rana"
+            
+        },
+        {
+            "folder": "texto - no tot son flors i violes"
+        },
+        {
+            "folder": "Benacantil genericas",
             "autoplay": "true"
+        },
+        {
+            "folder": "audio - benacantil"
+        },
+        {
+            "folder": "Cocina Casa Encendida 1"
             
         },
         {
-            "folder": "2"
+            "folder": "Bezana"
         },
         {
-            "folder": "3"
-            
+            "folder": "Paisanaje"
         },
         {
-            "folder": "4"
+            "folder": "Benacantil detalles"
         },
         {
-            "folder": "5"
+            "folder": "Girona Volta Video"
         },
         {
-            "folder": "6"
+            "folder": "Cocina Casa Encendida 2"
         },
         {
-            "folder": "7"
+            "folder": "texto - la recolectora"
         },
         {
-            "folder": "8",
-            "title": "La Recolectora",
-            "link":"LaRecolectora/index.html"
+            "folder": "O.casita Iñaki"
         },
         {
-            "folder": "9"
+            "folder": "O.casita Iñaki 2"
         },
         {
-            "folder": "10"
+            "folder": "Ojo x ojo 1"
         },
         {
-            "folder": "11"
+            "folder": "Ojo x ojo 2"
         },
         {
-            "folder": "12"
-        }   
+            "folder": "Rualasal Renders"
+        },
+        {
+            "folder": "Taller Marta",
+            "autoplay": "true"
+        },
+        {
+            "folder": "Refugio tierra y flores"
+        },
+        {
+            "folder": "Taller Mane"
+        },
+        {
+            "folder": "Maquina Detalle",
+            "autoplay": "true"
+        },
+        {
+            "folder": "Maquina Escena"
+        },
+        {
+            "folder": "Recolectora Carro"
+        }   ,
+        {
+            "folder": "Recolectora Main"
+        }    
     ]
 }
