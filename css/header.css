@@ -1,0 +1,70 @@
+header {
+        position: sticky;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin: 0px;
+        width: 100%;
+        top: 0;
+        left: 0px;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 1),
+          rgba(0, 255, 0, 0)
+        );
+        padding-left: 20px;
+        padding-right: 20px;
+        z-index: 10;
+      }
+
+      .header h1 {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+        color: #000;
+      animation: flipH 1s forwards;
+        }
+
+        @keyframes flipH {
+            from {
+                transform: scaleX(1);
+            }
+            to {
+                transform: scaleX(-1);
+            }
+        }
+
+      .header button {
+        background: transparent;
+        border: none;
+        font-weight: 900;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 2em;
+        right: 10px;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .header button:hover {
+        cursor: pointer;
+      }
+
+      .header a:link {
+        text-decoration: none;
+        color: #000;
+      }
+      .header a:visited {
+        text-decoration: none;
+        color: #000;
+      }
+      .header a:hover {
+        text-decoration: none;
+        color: #0f0;
+      }
+      .header a:active {
+        text-decoration: none;
+        color: #000;
+      }

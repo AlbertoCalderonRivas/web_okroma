@@ -4,11 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About us</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <style>
+        .header h1 {
+            transform: scaleX(-1);
+            animation: flipH 1s forwards;
+        }
+
+        @keyframes flipH {
+            from {
+                transform: scaleX(-1);
+            }
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        /* Estilos base para el contenedor principal */
+        .container {
+            display: flex;
+            width: 100%;
+            gap: 30px;
+            margin: 20px;
+            align-items: flex-start; /* Alinea los elementos al inicio verticalmente */
+        }
+
+        /* Estilos para escritorio (por defecto) */
+        .data-container {
+            justify-self: ;
+            flex: 0 0 50%; /* Ocupa el 50% del espacio */
+            order: 1; /* Se muestra segundo (a la derecha) */
+        }
+
+        .info-container {
+            flex: 0 0 50%; /* Ocupa el 50% del espacio */
+            order: 2; /* Se muestra primero (a la izquierda) */
+        }
+
+        .info-container p {
+            text-wrap: wrap;
+        }
+
+        /* Estilos para móviles */
+        @media (max-width: 758px) {
+            .container {
+                flex-direction: column; /* Coloca los elementos en columna */
+                gap: 20px; /* Espacio entre elementos en móvil */
+            }
+            
+            /* En móvil: info-container primero, data-container después */
+            .data-container {
+                order: 2; /* Se muestra segundo en móvil */
+                flex: none; /* Quita el comportamiento flexible */
+                width: 100%; /* Ocupa todo el ancho */
+            }
+
+            .info-container {
+                order: 1; /* Se muestra primero en móvil */
+                flex: none; /* Quita el comportamiento flexible */
+                width: 100%; /* Ocupa todo el ancho */
+            }
+        }
+    </style>
 </head>
 <body>
     
-    <p> Work in progresss</p>
+    <header class="header">
+      <h1>o.kroma</h1>
+      <button id="menu"><a id="menu-link" href="../">&lt;</a></button>
+    </header>
 
-    <a href="../">back</a>
+    <div class="container">
+        <div class="data-container">
+            <img src="" alt="Imagen descriptiva"> <!-- Añadí el atributo alt para accesibilidad -->
+            <ul id="contact-info">
+                <li>Información de contacto 1</li>
+                <li>Información de contacto 2</li>
+                <li>Información de contacto 3</li>
+            </ul>
+        </div>
+        <div class="info-container">
+            <p>
+                Somos un colectivo de arquitectes interesado en las transformaciones y problemáticas de los territorios que habitamos y nos habitan. Construimos nuevas narrativas que ponen en crisis las nociones aprendidas a través de la experimentación material y digital, las acciones colectivas y la investigación creativa. Uno de nuestros proyectos en marcha es La Recolectora, un artefacto que intenta crear nuevos vínculos, experimentación y aprendizajes a través de acciones colectivas en torno a la comida, la fiesta y la acción de espigar.
+            </p>
+        </div>
+    </div>
 </body>
 </html>
