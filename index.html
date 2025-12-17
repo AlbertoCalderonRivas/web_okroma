@@ -10,6 +10,9 @@
     <style>
 
 
+.post-container {
+        padding: 5px;
+      }
 
 
       .post-grid {
@@ -86,7 +89,7 @@
         width: 100%;
         height: auto;
         display: block;
-        border: 2px solid #0f0;
+        border: 2px solid rgb(0, 221, 92);
       }
 
       .post-media audio {
@@ -94,8 +97,8 @@
         height: 100%;
         display: block;
         min-height: 40px;
-        accent-color: #0f0;
-        color: #0f0;
+        accent-color: rgb(0, 221, 92);
+        color: rgb(0, 221, 92);
       }
 
       .post-text {
@@ -108,7 +111,7 @@
       .post-text h2 {
         margin: 0 0 2px 0;
         font-size: 1.5rem;
-        color: #0f0;
+        color: rgb(0, 221, 92);
         text-align: center;
       }
 
@@ -182,7 +185,7 @@
       }
 
       .carousel-arrow:hover {
-        color: #0f0;
+        color: rgb(0, 221, 92);
       }
 
       .carousel-arrow.prev {
@@ -214,7 +217,7 @@
         }
 
         .carousel-dot.active {
-            background: #0f0;
+            background: rgb(0, 221, 92);
         }
 
       /* Loading & Error */
@@ -252,7 +255,9 @@
 
     <div id="error" class="message error hidden"></div>
 
+    <div class="post-container">
     <div class="post-grid" id="postGrid"></div>
+  </div>
 
     <script>
       // Configuración

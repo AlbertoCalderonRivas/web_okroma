@@ -38,7 +38,7 @@
 
 * {
         box-sizing: border-box;
-        accent-color: rgb(0, 255, 0);
+        accent-color: rgb(0, 221, 92);
       }
 
       body {
@@ -53,8 +53,8 @@
         width: 100%;
         min-height: 100vh;
         background: #fff;
-        margin: 0;
-        padding: 5px;
+        margin: 0px;
+        padding: 0px;
         font-family: 'okroma', Arial, Helvetica, sans-serif;
         
       }

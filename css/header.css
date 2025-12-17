@@ -62,7 +62,7 @@ header {
       }
       .header a:hover {
         text-decoration: none;
-        color: #0f0;
+        color: rgb(0, 221, 92);
       }
       .header a:active {
         text-decoration: none;
