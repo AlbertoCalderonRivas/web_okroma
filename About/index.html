@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About us</title>
+    <link rel="icon" href="..\assets\favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/header.css" />
     <style>
@@ -49,7 +50,7 @@
             margin-bottom: 10px;
        
              border: 2px solid rgb(0, 221, 92);
-             /*filter:  sepia(70%) hue-rotate(70deg) brightness(0.8) saturate(250%) contrast(110%);*/
+             
         }
 
         .data-container ul {
@@ -125,19 +126,32 @@
                 width: 100%;
                 text-align: justify;
             }
+        
+        }
+
+        .info-container a, .info-container a:visited {
+            color: black;
+            
+            text-decoration: none;
+        }
+
+        .info-container a:hover {
+            font-weight: 600;
+            color: rgb(0, 221, 92);
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
     
     <header class="header">
-      <h1>o.kroma</h1>
+      <h1><a id="menu-link" href="../">o.kroma</a></h1>
       <button id="menu"><a id="menu-link" href="../">&lt;</a></button>
     </header>
 
     <div class="container">
         <div class="data-container">
-            <img src="../media/okroma_grupal.jpeg"  alt="Imagen descriptiva"> 
+            <img src="../media/okroma_grupal.jpg"  alt="Imagen descriptiva"> 
             <ul id="contact-info">
                 
                 <li>
@@ -163,7 +177,22 @@
             </ul>
         </div>
         <div class="info-container">
-            <p>Somos un colectivo de arquitectes interesado en las transformaciones y problemáticas de los territorios que habitamos y nos habitan. Construimos nuevas narrativas que ponen en crisis las nociones aprendidas a través de la experimentación material y digital, las acciones colectivas y la investigación creativa. Uno de nuestros proyectos en marcha es La Recolectora, un artefacto que intenta crear nuevos vínculos, experimentación y aprendizajes a través de acciones colectivas en torno a la comida, la fiesta y la acción de espigar.
+            <p>Somos un colectivo de arquitectes que surge de la necesidad de crear un espacio de experimentación y reflexión colaborativa .
+                Estamos interesades en las transformaciones y problemáticas de los territorios que habitamos y nos habitan. <br><br>
+                Construimos nuevas narrativas que ponen en crisis las nociones aprendidas a través de la experimentación material
+                 y digital, las acciones colectivas y la investigación creativa. Esta mirada se aplica a todas nuestras intervenciones,
+                  que abarcan desde el diseño y construcción arquitectónica hasta la mediación artística y cultural. <br><br>
+                  Hemos colaborado con diversas instituciones y asociaciones como 
+                  <a href="https://www.lacasaencendida.es/" target="_blank" rel="noopener noreferrer">La Casa Encendida</a> (Madrid), 
+                  <a href="https://www.instagram.com/lascigarrerascc/?hl=es" target="_blank" rel="noopener noreferrer">Centro Cultural Las Cigarreras</a> (Alicante), 
+                  <a href="https://www.instagram.com/el_bolit_girona/?hl=es" target="_blank" rel="noopener noreferrer">Bòlit Centre d'art contemporani</a> (Girona),
+                   <a href="https://lacuartapiel.com/" target="_blank" rel="noopener noreferrer">La Cuarta Piel</a>,
+                   <a href="https://femlavolta.cat/" target="_blank" rel="noopener noreferrer">Fem la Volta</a> y
+                   <a href="https://paisanaje.org/" target="_blank" rel="noopener noreferrer">Paisanaje</a>.
+                   
+
+
+
             </p>
         </div>
     </div>
