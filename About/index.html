@@ -25,45 +25,105 @@
         .container {
             display: flex;
             width: 100%;
-            gap: 30px;
-            margin: 20px;
-            align-items: flex-start; /* Alinea los elementos al inicio verticalmente */
+            gap: 50px;
+            padding:0 140px;
+            align-items: stretch; 
+            
+            transition: all 0.9s ease;
         }
 
         /* Estilos para escritorio (por defecto) */
         .data-container {
-            justify-self: center;
-            flex: 0 0 50%; /* Ocupa el 50% del espacio */
-            order: 1; /* Se muestra segundo (a la derecha) */
+            justify-self: left;
+            flex: 1; 
+            
+            min-width: 350px;
+            order: 1;
+            
         }
 
+        .data-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 10px;
+       
+             border: 2px solid rgb(0, 221, 92);
+             /*filter:  sepia(70%) hue-rotate(70deg) brightness(0.8) saturate(250%) contrast(110%);*/
+        }
+
+        .data-container ul {
+            list-style-type: square;
+            color: rgb(0, 221, 92);
+            padding: 0;
+            margin: 0 20px;
+        }
+
+        .data-container ul li a {
+            color: black;
+            font-weight: 500;
+            text-decoration: none;
+            display: block; 
+            padding: 2px 0; 
+            
+        }
+
+      
+        .data-container ul li a:hover {
+            color: rgb(0, 221, 92);
+            font-weight: 600;
+           
+            cursor: pointer;
+        }
+
+       
+
+        
+
+       
+
         .info-container {
-            flex: 0 0 50%; /* Ocupa el 50% del espacio */
-            order: 2; /* Se muestra primero (a la izquierda) */
+            flex: 1.5; 
+            order: 2;
+            
         }
 
         .info-container p {
+            margin-top: 0;
+            width: 100%;
+            font-weight: 800;
+            max-width: 758px;
             text-wrap: wrap;
+        }
+        
+        @media (max-width: 1200px) {
+            .container{
+                padding: 0 20px;
+            }
         }
 
         /* Estilos para móviles */
         @media (max-width: 758px) {
             .container {
-                flex-direction: column; /* Coloca los elementos en columna */
-                gap: 20px; /* Espacio entre elementos en móvil */
+                flex-direction: column;
+                gap: 20px;
             }
             
-            /* En móvil: info-container primero, data-container después */
             .data-container {
-                order: 2; /* Se muestra segundo en móvil */
-                flex: none; /* Quita el comportamiento flexible */
-                width: 100%; /* Ocupa todo el ancho */
+                order: 2;
+                flex: none;
+                width: 100%;
+            }
+
+            .data-container img {
+                width: 100%;
             }
 
             .info-container {
-                order: 1; /* Se muestra primero en móvil */
-                flex: none; /* Quita el comportamiento flexible */
-                width: 100%; /* Ocupa todo el ancho */
+                order: 1;
+                flex: none;
+                width: 100%;
+                text-align: justify;
             }
         }
     </style>
@@ -77,16 +137,33 @@
 
     <div class="container">
         <div class="data-container">
-            <img src="" alt="Imagen descriptiva"> 
+            <img src="../media/okroma_grupal.jpeg"  alt="Imagen descriptiva"> 
             <ul id="contact-info">
-                <li>o.kroma.colectivo@gmail.com</li>
-                <li>@o.kroma.colectivo</li>
-                <li>Información de contacto 3</li>
+                
+                <li>
+                    <a href="mailto:o.kroma.colectivo@gmail.com"
+                    target="_blank" 
+                     rel="noopener noreferrer"
+                       title="Enviar correo a o.kroma.colectivo@gmail.com">
+                        o.kroma.colectivo@gmail.com
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://www.instagram.com/o.kroma.colectivo/" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       title="Visitar Instagram de O.Kroma">
+                        @o.kroma.colectivo
+                    </a>
+                </li>
+                
+                <!-- Puedes añadir más contactos si necesitas -->
             </ul>
         </div>
         <div class="info-container">
-            <p>
-                Somos un colectivo de arquitectes interesado en las transformaciones y problemáticas de los territorios que habitamos y nos habitan. Construimos nuevas narrativas que ponen en crisis las nociones aprendidas a través de la experimentación material y digital, las acciones colectivas y la investigación creativa. Uno de nuestros proyectos en marcha es La Recolectora, un artefacto que intenta crear nuevos vínculos, experimentación y aprendizajes a través de acciones colectivas en torno a la comida, la fiesta y la acción de espigar.
+            <p>Somos un colectivo de arquitectes interesado en las transformaciones y problemáticas de los territorios que habitamos y nos habitan. Construimos nuevas narrativas que ponen en crisis las nociones aprendidas a través de la experimentación material y digital, las acciones colectivas y la investigación creativa. Uno de nuestros proyectos en marcha es La Recolectora, un artefacto que intenta crear nuevos vínculos, experimentación y aprendizajes a través de acciones colectivas en torno a la comida, la fiesta y la acción de espigar.
             </p>
         </div>
     </div>

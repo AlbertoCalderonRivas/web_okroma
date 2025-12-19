@@ -60,7 +60,8 @@
             "folder": "Refugio tierra y flores"
         },
         {
-            "folder": "Recolectora pocima"
+            "folder": "Recolectora pocima",
+             "autoplay": "true"
         },
         {
             "folder": "Taller Mane"

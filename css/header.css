@@ -1,22 +1,21 @@
 header {
-        position: sticky;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        margin: 0px;
-        width: 100%;
-        top: 0;
-        left: 0px;
-        background: linear-gradient(
-          to bottom,
-          rgba(255, 255, 255, 1),
-          rgba(0, 255, 0, 0)
-        );
-        padding-left: 20px;
-        padding-right: 20px;
-        z-index: 10;
-      }
+    position: sticky !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px;
+    width: 100%;
+    top: 0 !important;
+    left: 0px;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 1),
+        rgba(0, 255, 0, 0)
+    );
+    padding-left: 20px;
+    padding-right: 20px;
+    z-index: 100; /* Aumentado para estar por encima del contenido */
+}
 
       .header h1 {
         -moz-transform: scaleX(-1);

@@ -39,9 +39,11 @@
 * {
         box-sizing: border-box;
         accent-color: rgb(0, 221, 92);
+
       }
 
       body {
+        
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -58,6 +60,31 @@
         font-family: 'okroma', Arial, Helvetica, sans-serif;
         
       }
+
+      * {
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE/Edge */
+}
+
+::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: transparent !important;
+    border: none !important;
+}
+
+html {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
 
       h1, h2 {
         font-family: 'okroma_titulos', Arial, Helvetica, sans-serif;
