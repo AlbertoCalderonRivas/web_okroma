@@ -106,6 +106,7 @@ class Post {
   constructor(data, index) {
     this.id = `post-${index}`;
     this.title = data.title || null;
+    this.name = data.name || null;
     this.folderPath = data.folder
       ? `${CONFIG.mediaBasePath}/${data.folder}`
       : null;
@@ -113,6 +114,10 @@ class Post {
     this.background = data.background || null;
     this.autoplay = data.autoplay || false;
     this.mediaFolder = null;
+    this.date = data.date || null;
+    this.location = data.location || null;
+    this.institution = data.institution || null;
+    this.tagNames = data.tags || [];
   }
 
   async load() {
@@ -126,6 +131,10 @@ class Post {
     const post = document.createElement("div");
     post.className = "post";
     post.id = this.id;
+
+     if (this.name) {
+      post.dataset.name = this.name;   
+      }
 
     if (this.background) {
       post.style.backgroundColor = this.background;
@@ -479,13 +488,13 @@ class Post {
     const textDiv = document.createElement("div");
     textDiv.className = "post-text";
 
-    /*
+    
           if (title) {
             const titleEl = document.createElement("h2");
             titleEl.textContent = this.title;
             textDiv.appendChild(titleEl);
           }
-*/
+
     if (textContent) {
       const textEl = document.createElement("p");
       textEl.innerHTML = textContent;
@@ -516,24 +525,20 @@ class PortfolioApp {
   }
 
   async init() {
-    try {
-      const data = await Utils.fetchJSON(CONFIG.jsonPath);
-
-      if (!data.post || !Array.isArray(data.post)) {
-        throw new Error("Formato de JSON inválido");
-      }
-
-      this.posts = data.post.map(
-        (postData, index) => new Post(postData, index)
-      );
-
-      await this.loadAndRenderPosts();
-      this.hideLoading();
-    } catch (error) {
-      this.showError(error.message);
-      console.error("Error inicializando la aplicación:", error);
+  try {
+    const data = await Utils.fetchJSON(CONFIG.jsonPath);
+    if (!data.post || !Array.isArray(data.post)) {
+      throw new Error("Formato de JSON inválido");
     }
+    this.posts = data.post.map((postData, index) => new Post(postData, index));
+    await this.loadAndRenderPosts();
+    this.hideLoading();
+    this.generateIndexTable(); // <-- Añadir esta línea
+  } catch (error) {
+    this.showError(error.message);
+    console.error("Error inicializando la aplicación:", error);
   }
+}
 
   async loadAndRenderPosts() {
     for (const post of this.posts) {
@@ -542,10 +547,61 @@ class PortfolioApp {
       this.gridEl.appendChild(postElement);
     }
   }
+
+  generateIndexTable() {
+  const details = document.getElementById("menu-index");
+  if (!details) return;
+
+  // Añadir título al summary
+  const summary = details.querySelector("summary");
+  if (summary) summary.textContent = "";
+
+  // Crear tabla
+  const table = document.createElement("table");
+  table.className = "index-table";
+
+  
+
+  // Cuerpo de la tabla
+  const tbody = document.createElement("tbody");
+  this.posts.forEach((post) => {
+    const row = document.createElement("tr");
+
+    // Proyecto (name)
+    const nameCell = document.createElement("td");
+    nameCell.textContent = post.name || "";
+    row.appendChild(nameCell);
+
+    // Fecha
+    const dateCell = document.createElement("td");
+    dateCell.textContent = post.date || "";
+    row.appendChild(dateCell);
+
+    // Ubicación
+    const locationCell = document.createElement("td");
+    locationCell.textContent = post.location || "";
+    row.appendChild(locationCell);
+
+    // Institución
+    const institutionCell = document.createElement("td");
+    institutionCell.textContent = post.institution || "";
+    row.appendChild(institutionCell);
+
+    tbody.appendChild(row);
+  });
+  table.appendChild(tbody);
+  details.appendChild(table);
+}
+
 }
 
 // Inicializar la aplicación
 document.addEventListener("DOMContentLoaded", () => {
   const app = new PortfolioApp();
   app.init();
+});
+
+document.getElementById("menu").addEventListener("click", () => {
+  document.getElementById("menu-index").open =
+    !document.getElementById("menu-index").open;
 });

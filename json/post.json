@@ -1,83 +1,72 @@
 {
     "post": [
-
         {
-            "folder": "rana"
-            
+            "folder": "centro social medt",
+            "name": "Alfombra MEDT",
+            "date": "2024-06-01",
+            "location": "Villaverde, Madrid",
+            "institution": "Centro Cultural Medt",
+            "tags": ["design", "centro-cultural"]
         },
         {
-            "folder": "texto - no tot son flors i violes"
+            "folder": "no tot son flors i violes",
+            "name": "No tot son flors i violes",
+            "date": "2020-06-01",
+            "location": "Benacantil, Alicante",
+            "institution": "Centro Cultural Las Cigarreras",
+            "tags": ["taller", "centro-cultural"]
         },
         {
-            "folder": "Benacantil genericas",
-            "autoplay": "true"
+            "folder": "makina",
+            "name": "Maquina 2024"
         },
         {
-            "folder": "audio - benacantil"
+            "folder": "o.casita",
+            "name": "o.casita"
         },
         {
-            "folder": "Cocina Casa Encendida 1"
-            
+            "folder": "comida paisanaje",
+            "name": "Comida Paisanaje"
         },
         {
-            "folder": "Bezana"
+            "folder": "taller marta modul territori"
+        },
+        {   
+            "folder": "dispersé juan silió"
         },
         {
-            "folder": "Paisanaje"
+           "folder": "un totem pa tu toto"
+    },
+        {
+            "folder": "rualasal"
         },
         {
-            "folder": "Benacantil detalles"
+            "folder": "estanteria chuchi"
         },
         {
-            "folder": "Girona Volta Video"
+            "folder": "la cocina de la casa encendida"
+        },
+        {   
+            "folder": "dispersé guía del estudiante"
         },
         {
-            "folder": "Cocina Casa Encendida 2"
+            "folder": "taller o.pocima"
         },
         {
-            "folder": "texto - la recolectora"
+            "folder": "ojo x ojo"
         },
         {
-            "folder": "O.casita Iñaki"
+            "folder": "casa parroquial"
         },
         {
-            "folder": "O.casita Iñaki 2"
+            "folder": "jornadas voltaicas"
         },
         {
-            "folder": "Ojo x ojo 1"
+            "folder": "taller sales y barro bucarofagia"
         },
         {
-            "folder": "Ojo x ojo 2"
-        },
-        {
-            "folder": "Rualasal Renders"
-        },
-        {
-            "folder": "Taller Marta",
-            "autoplay": "true"
-        },
-        {
-            "folder": "Refugio tierra y flores"
-        },
-        {
-            "folder": "Recolectora pocima",
-             "autoplay": "true"
-        },
-        {
-            "folder": "Taller Mane"
-        },
-        {
-            "folder": "Maquina Detalle",
-            "autoplay": "true"
-        },
-        {
-            "folder": "Maquina Escena"
-        },
-        {
-            "folder": "Recolectora Carro"
-        }   ,
-        {
-            "folder": "Recolectora Main"
-        }    
+            "folder": "taller de mane"
+        }
+        
     ]
 }

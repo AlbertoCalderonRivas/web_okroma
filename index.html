@@ -13,18 +13,24 @@
 
   <body>
     <header class="header">
-      <h1>o.kroma</h1>
-      <button id="menu"><a id="menu-link" href="About">=</a></button>
+      <h1 ><a id="menu-link" href="About">o.kroma</a></h1>
+      <button id="menu">☰</button>
     </header>
 
+    
     <div id="loading" class="message"><div id="loading-spinner"></div></div>
-
+    
     <div id="error" class="message error hidden"></div>
+    
+    <details id="menu-index">
+      <summary></summary>
+    </details>
 
     <div class="post-container">
     <div class="post-grid" id="postGrid"></div>
   </div>
 
     <script src="scripts/grid.js"></script>
+    <script src="scripts/cursor.js"></script>
   </body>
 </html>

@@ -7,6 +7,7 @@
     <link rel="icon" href="..\assets\favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/header.css" />
+    <script src="../scripts/cursor.js" defer></script>
     <style>
         .header h1 {
             transform: scaleX(-1);
@@ -27,7 +28,7 @@
             display: flex;
             width: 100%;
             gap: 50px;
-            padding:0 140px;
+            padding:0 25px;
             align-items: stretch; 
             
             transition: all 0.9s ease;
@@ -36,11 +37,9 @@
         /* Estilos para escritorio (por defecto) */
         .data-container {
             justify-self: left;
-            flex: 1; 
-            
+            flex: 1;             
             min-width: 350px;
             order: 1;
-            
         }
 
         .data-container img {
@@ -66,15 +65,12 @@
             text-decoration: none;
             display: block; 
             padding: 2px 0; 
-            
         }
 
       
         .data-container ul li a:hover {
             color: rgb(0, 221, 92);
             font-weight: 600;
-           
-            cursor: pointer;
         }
 
        
@@ -92,9 +88,11 @@
         .info-container p {
             margin-top: 0;
             width: 100%;
-            font-weight: 800;
+            font-weight: 600;
             max-width: 758px;
             text-wrap: wrap;
+            text-justify: inter-word;
+            text-align: justify;
         }
         
         @media (max-width: 1200px) {
@@ -196,5 +194,6 @@
             </p>
         </div>
     </div>
+       
 </body>
 </html>
